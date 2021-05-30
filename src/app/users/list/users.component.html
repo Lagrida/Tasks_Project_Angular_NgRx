@@ -1,0 +1,51 @@
+
+    <div style="padding: 10px; text-align: center" *ngIf="true">
+        <mat-spinner color="primary" diameter="30" style="vertical-align:middle; display: inline-block"></mat-spinner> Loading.......
+    </div>
+    <div style="padding: 10px; text-align: center" *ngIf="true">
+        <div class="alert alert-danger">
+            <strong>Error:</strong> Error message.
+        </div>
+    </div>
+    <div class="my-4 p-2">
+        <perfect-scrollbar style="max-width: 1000px; margin-left:auto; margin-right:auto;" [config]="{useBothWheelAxes: true, suppressScrollX: false, suppressScrollY: false}">
+            <table mat-table [dataSource]="dataSource" *ngIf="true" style="margin-left:auto; margin-right:auto;">
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>#</th>
+                    <td mat-cell *matCellDef="let element" style="padding:15px"> {{element.id}} </td>
+                </ng-container>
+                <ng-container matColumnDef="img">
+                    <th mat-header-cell *matHeaderCellDef>Img</th>
+                    <td mat-cell *matCellDef="let element" style="padding:15px">
+                        <a [routerLink]="['/get_user', element.id]">
+                            <img src={{element.image}} onerror="this.src='https://demos.lagrida.com/files/images/image_error.png'" alt={{element.username}} class="avatar" />
+                        </a>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef>Username</th>
+                    <td mat-cell *matCellDef="let element" style="padding:15px">
+                        <a [routerLink]="['/get_user', element.id]">{{element.username}}</a>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let element" style="padding:15px"> {{element.email}} </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Full name</th>
+                    <td mat-cell *matCellDef="let element" style="padding:15px"> {{element.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef>Roles</th>
+                    <td mat-cell *matCellDef="let element" style="padding:15px"> {{element?.role}} </td>
+                </ng-container>
+                <ng-container matColumnDef="created_at">
+                    <th mat-header-cell *matHeaderCellDef>Registration date</th>
+                    <td mat-cell *matCellDef="let element" style="padding:15px"> {{element.created_at | date:'yyyy-MM-dd'}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </perfect-scrollbar>
+    </div>

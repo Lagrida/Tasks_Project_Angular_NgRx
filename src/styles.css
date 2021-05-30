@@ -1,1 +1,84 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; background: #F4F6F8 }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+.avatar {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.avatar2 {
+    /* Center the content */
+    display: inline-block;
+    vertical-align: middle;
+
+    /* Used to position the content */
+    position: relative;
+
+    /* Colors */
+    background-color: rgba(0, 0, 0, .3);
+    color: #FFF;
+
+    /* Rounded border */
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+}
+
+.avatar_letters {
+    /* Center the content */
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+.example-full-width {
+    width: 100%;
+}
+.header_links{
+    margin-left: 22px;
+    font-weight: normal;
+    font-size: 16px
+}
+.header_links a{
+    color: #fff;
+    text-decoration: none
+}
+.flexbox-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+.flexbox-item{
+    width: 250px;
+    margin: 8px;
+    flex-shrink:0;
+}
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+.example-container {
+    width: 400px;
+  }
+  mat-drawer-container{
+    background: #F4F6F8;
+    background-color: #F4F6F8;
+  }
+
+  .full-width-dialog .mat-dialog-container {
+    max-width: 700px !important;
+  }

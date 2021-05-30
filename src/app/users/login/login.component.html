@@ -1,0 +1,43 @@
+<div style="width: 400px; text-align:center; margin:auto; margin-top: 20px">
+    <mat-card>
+        <div class="avatar2" style="background:#F50057; height: 60px; width: 60px; margin-bottom: 10px">
+            <div class="avatar_letters">
+                <mat-icon style="font-size: 40px; margin-right:17px">lock</mat-icon>
+            </div>
+        </div>
+        <h1>Sign in</h1>
+        <div style="text-align: center" *ngIf="true">
+            <div class="alert alert-danger">
+                Hello World, this error world
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="form.valid && handleSubmit(form)">
+            <div class="fluid-container">
+                <div class="row">
+                    <div class="col-12">
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Username</mat-label>
+                            <input matInput name="username" formControlName="username" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" name="password" formControlName="password" />
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button [disabled]="registrationBegin | async" mat-raised-button class="example-full-width" color="primary">LOGIN</button>
+                        <div class="p-2" *ngIf="registrationBegin | async">
+                            <mat-spinner color="primary" diameter="30" style="vertical-align:middle; display: inline-block"></mat-spinner> Loading.......
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</div>
