@@ -1,5 +1,5 @@
 <mat-card>
     <img src={{infos.image}} style="width:100px; height:100px; cursor:pointer" alt={{infos.username}} class="avatar" (click)="openDialog()" /><br />
     <h1>{{infos.username}}</h1>
-    <div class="text-muted" style="font-size:18px">{{infos.roles[0]}}</div>
+    <div class="text-muted" style="font-size:18px">{{userService.getRoles(infos.roles)}}</div>
 </mat-card>

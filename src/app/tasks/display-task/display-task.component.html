@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>{{ data.fullTask.task.title }}</h1>
+<mat-divider></mat-divider>
+<mat-dialog-content class="my-3">
+    <div class="container">
+        <div class="row fonts">
+            <div class="col-12 my-1">
+                <div><b>Description:</b></div>
+                <div class="my-1 description"><i>{{ data.fullTask.task.description }}</i></div>
+            </div>
+            <div class="col-12 my-1">
+                <div><b>Type:</b></div>
+                <div class="my-1 text-center">{{ getType(data.fullTask.task.type) }}</div>
+            </div>
+            <div class="col-12 my-1">
+                <div><b>Created On :</b></div>
+                <div class="my-1 text-center" style="color: green; font-family: Verdana, Geneva, Tahoma, sans-serif">{{ data.fullTask.task.createdOn | date:'dd/MM/yyyy HH:mm' }}</div>
+            </div>
+            <div class="col-12 my-1">
+                <div><b>Users:</b></div>
+                <div class="my-1 text-center mx-auto">
+                    <mat-chip-list *ngIf="data.fullTask.users.length > 0">
+                        <mat-chip
+                        *ngFor="let user of data.fullTask.users"
+                        [selectable]="true"
+                        [removable]="false">
+                            <img [src]="user.image" class="avatar" /> &nbsp; {{user.username}}
+                        </mat-chip>
+                    </mat-chip-list>
+                    <div *ngIf="data.fullTask.users.length == 0">There are no users!</div>
+                </div>
+            </div>
+            <div class="col-12 my-1">
+                <div><b>Files:</b></div>
+                <div class="my-1">
+                    <div class="files" *ngIf="data.fullTask.files.length > 0">
+                        <div class="file" *ngFor="let file of data.fullTask.files; let i = index;">
+                            <div class="file-body">
+                                <span *ngIf="filesService.isImage2(file.fileExtension)">
+                                    <a [href]="filesService.getSource2(file.fileDirectory, file.fileName, file.fileExtension)" target="_blank">
+                                        <img [src]="filesService.getSource2(file.fileDirectory, file.fileName, file.fileExtension)" style="width: 100%; max-height: 100px" alt="" />
+                                    </a>
+                                </span>
+                                <span *ngIf="!filesService.isImage2(file.fileExtension)">
+                                    <a [href]="filesService.getSource2(file.fileDirectory, file.fileName, file.fileExtension)" [download]="file.fileName">
+                                        <img src="./assets/images/{{ file.fileExtension }}.png" alt="" />
+                                    </a>
+                                </span>
+                                <div class="title">{{ filesService.bigTitle(file.fileOriginalName) }}</div>
+                            </div>
+                            <div class="file-infos">
+                                <div class="size">{{ filesService.getSize(file.fileSize) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center" *ngIf="data.fullTask.files.length == 0">There are no files!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

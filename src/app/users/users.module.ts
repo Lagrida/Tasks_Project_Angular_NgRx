@@ -25,6 +25,9 @@ import { usersFeatureKey, usersReducer } from "./store/users.reducer";
 //import { usersReducers } from "./store";
 import { environment } from "src/environments/environment";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { ProfileComponentComponent } from "./profile-component/profile-component.component";
+import { UserComponent } from './user/user.component';
+import { ImageDialogComponent } from './image-dialog/image-dialog.component';
 
 
 
@@ -39,7 +42,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ProfileComponent,
         RegisterComponent,
         UsersComponent,
-        SideImgComponent
+        SideImgComponent,
+        ProfileComponentComponent,
+        UserComponent,
+        ImageDialogComponent
     ],
     imports: [
         CommonModule,

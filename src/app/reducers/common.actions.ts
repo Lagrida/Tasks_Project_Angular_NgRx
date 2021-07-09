@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 
-export const UPDATE_ERROR_MESSAGE = '[Common] Load Commons';
+export const SET_COMMON_ERROR_MESSAGE = '[Common] set common error message';
 
-export const errorMessageCommon = createAction(UPDATE_ERROR_MESSAGE, props<{ message: string }>());
+export const setCommonErrorMessage = createAction(SET_COMMON_ERROR_MESSAGE, props<{ message: string }>());

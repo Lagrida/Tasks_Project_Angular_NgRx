@@ -1,0 +1,48 @@
+.fonts{
+    font-size: 16px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.fonts b{
+    font-size: 18px;
+}
+.avatar {
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.files{
+    margin: 10px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+.file{
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    width: 180px;
+    border-radius: 10px;
+    background: #F0FFF0
+}
+.file-body{
+    height: 135px
+}
+.file-infos{
+
+}
+.file .title{
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    word-break: break-all
+}
+.file .size{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #808080
+}
+.description{
+    background: #E6E6FA;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+}

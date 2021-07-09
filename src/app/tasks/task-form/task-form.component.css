@@ -1,0 +1,107 @@
+.drop-zone{
+    border: 4px dashed green;
+    border-radius: 10px;
+    margin: 10px 0px;
+    padding: 40px;
+    text-align: center;
+    font-weight: 500;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    color: #C3C3C3;
+    cursor: pointer;
+}
+.drag-over{
+    opacity: 0.5;
+}
+
+.files{
+    margin: 10px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.file{
+    padding: 5px;
+    text-align: center;
+    margin: 10px;
+    width: 180px;
+    border-radius: 8px 8px 0px 0px
+}
+.file-body{
+    height: 170px;
+    position: relative
+}
+.file-infos{
+
+}
+.file .title{
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    word-break: break-all
+}
+.file .size{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #808080
+}
+.file:hover{
+    background-color: #F3F3F3;
+    border-bottom: 4px solid #C3C3c3
+}
+.file img{
+    max-width: 125px;
+}
+.drag-over{
+    opacity: 0.5;
+}
+.close{
+    float:right;
+    font-family: tahoma;
+    color: #CC0000;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 3px 6px
+}
+.close:hover{
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+}
+.done{
+    background: #D4EDDA;
+}
+.done:hover{
+    background: #D4EDDA;
+    border-bottom: 0px;
+}
+.error-upload{
+    background: #F8D7DA;
+}
+.error-upload:hover{
+    background: #F8D7DA;
+}
+.avatar {
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.file2{
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    width: 180px;
+    border-radius: 10px;
+    background: #F0FFF0
+}
+.file-body2{
+    height: 135px;
+    word-break: break-all
+}
+.file2 .title{
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    word-break: break-all
+}
+.file2 .size{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #808080
+}

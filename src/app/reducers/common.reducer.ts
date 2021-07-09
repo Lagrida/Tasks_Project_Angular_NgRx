@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { errorMessageCommon } from './common.actions';
+import { setCommonErrorMessage } from './common.actions';
 
 
 export const commonFeatureKey = 'common';
@@ -15,7 +15,7 @@ export const initialState: CommonState = {
 
 export const CommonReducer = createReducer(
   initialState,
-  on(errorMessageCommon, (state, action) => {
+  on(setCommonErrorMessage, (state, action) => {
     return {
       ...state,
       errorMessage: action.message

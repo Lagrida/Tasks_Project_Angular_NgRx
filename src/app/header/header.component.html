@@ -7,6 +7,9 @@
       <div style="display:none" class="header_links d-md-inline">
         <a [routerLink]="['users', 'list']"><mat-icon style="vertical-align: middle;">people</mat-icon> users</a>
       </div>
+      <div style="display:none" class="header_links d-md-inline" *ngIf="isConnected | async">
+        <a [routerLink]="['tasks']"><mat-icon style="vertical-align: middle;">group_work</mat-icon> Tasks</a>
+      </div>
       <span class="example-spacer"></span>
       <span style="display:none" class="d-md-inline" *ngIf="!(isConnected | async)">
         <a [routerLink]="['users', 'register']" style="color:#fff; text-decoration: none;">
@@ -27,11 +30,11 @@
       </span>
       <span *ngIf="isConnected | async">
         <button mat-icon-button mat-button [matMenuTriggerFor]="profile" class="example-icon" aria-label="Profile">
-          <img src="https://demos.lagrida.com/files/images/lagrida.png" alt="Lagrida" class="avatar" />
+          <img [src]="(user | async)?.image" alt="Lagrida" class="avatar" />
         </button>
         <mat-menu #profile="matMenu">
-          <button mat-menu-item><a [routerLink]="['users', 'profile']" style="color:#333333; text-decoration: none;">PROFILE</a></button>
-          <button mat-menu-item><a [routerLink]="['users', 'logout']" style="color:#CC3333; text-decoration: none;">LOGOUT</a></button>
+          <a [routerLink]="['users', 'profile']" style="color:#333333; text-decoration: none;"><button mat-menu-item>PROFILE</button></a>
+          <a (click)="logout()" style="text-decoration: none;"><button mat-menu-item style="color:#CC3333">LOGOUT</button></a>
         </mat-menu>
       </span>
     </mat-toolbar>

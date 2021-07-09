@@ -2,12 +2,9 @@ import { User } from '../models/user';
 
 export class Auth {
     public constructor(
-        private token: string,
-        private expiredAtDate: string
+        public token: string,
+        public expirationAt: string
     ){}
-    get expiredAt() {
-        return this.expiredAtDate;
-    }
 }
 export interface LoginType{
     username: string;
@@ -17,6 +14,6 @@ export interface LoginType{
 export class UserAuth {
     public constructor(
         public user: User,
-        private auth: Auth
+        public auth: Auth
     ){}
 }

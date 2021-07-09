@@ -1,0 +1,16 @@
+.backdrop1{
+    position: absolute;
+    z-index: 200;
+    vertical-align: middle;
+    text-align: center;
+    background-color: rgba(248, 249, 250, 0.4);
+}
+.backdrop2{
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    z-index: 201;
+    opacity: 1;
+    transform: translate(50%,-50%);
+    color: black
+}

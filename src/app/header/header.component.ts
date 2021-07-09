@@ -5,7 +5,7 @@ import { User } from '../models/user';
 import { AppState } from '../reducers';
 import { UsersService } from '../services/users.service';
 import { getIsConnected, getUser } from '../users/store/global-users.selectors';
-import { getIsRegistred } from '../users/store/users.selectors';
+import { logout } from '../users/store/users-action.actions';
 
 @Component({
   selector: 'app-header',
@@ -22,5 +22,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isConnected = this.store.select(getIsConnected);
     this.user = this.store.select(getUser);
+  }
+  logout(){
+    this.store.dispatch(logout());
   }
 }

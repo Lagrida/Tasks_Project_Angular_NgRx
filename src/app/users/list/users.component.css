@@ -1,0 +1,8 @@
+table th{
+    text-align: center;
+}
+table td{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

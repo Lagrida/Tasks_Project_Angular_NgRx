@@ -1,0 +1,8 @@
+<div #node1>
+        <div [ngClass]="{'backdrop1': show}" #node2>
+            <div class="backdrop2" *ngIf="show">
+                <mat-spinner color="accent" diameter="40" style="vertical-align:middle; display: inline-block"></mat-spinner>
+            </div>
+        </div>
+    <ng-content></ng-content>
+</div>

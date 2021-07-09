@@ -5,12 +5,13 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { UsersComponent } from './list/users.component';
+import { UserComponent } from "./user/user.component";
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      {
+        {
           path: 'register',
           component: RegisterComponent
         },
@@ -29,6 +30,10 @@ const routes: Routes = [
         {
           path: 'profile/edit',
           component: EditProfileComponent
+        },
+        {
+          path: 'get_user/:id',
+          component: UserComponent
         }
       ]
   }

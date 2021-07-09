@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../../dialog/dialog.component';
+import { UsersService } from 'src/app/services/users.service';
+import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 
 @Component({
   selector: 'app-side-img',
@@ -13,9 +14,9 @@ export class SideImgComponent implements OnInit {
     username:'',
     roles: [""]
   }
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public userService: UsersService) { }
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+    this.dialog.open(ImageDialogComponent, {
       width: '700px',
       data: {
         image: this.infos.image

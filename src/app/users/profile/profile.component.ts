@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { UsersService } from 'src/app/services/users.service';
 import { User } from '../../models/user';
 
 @Component({
@@ -7,11 +8,13 @@ import { User } from '../../models/user';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  @Input() user : User = new User('', '', '', '', '', '');
-  @Input() isProfile : Boolean = true;
-  constructor() { }
+  
+  user: User;
+  isProfile : Boolean = true;
+  constructor(private usersService: UsersService) { }
 
   ngOnInit(): void {
+    this.user = this.usersService.getUser();
   }
 
 }

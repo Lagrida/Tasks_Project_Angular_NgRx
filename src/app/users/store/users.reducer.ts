@@ -1,33 +1,40 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from 'src/app/models/user';
-import { loginUserSuccess, registerUser, registerUserSuccessMessage, toggleRegistration } from './users-action.actions';
+import { loginUserSuccess, registerUser, usersSuccessMessage, setUsersErrorMessage, toggleSubmitLoading } from './users-action.actions';
 
 
 export const usersFeatureKey = 'users';
 
 export interface UsersState {
-  isRegistred: boolean,
-  registrationBegin: boolean
+  success: boolean,
+  submitLoading: boolean,
+  errorMessage: string
 }
 
 export const initialState: UsersState = {
-  isRegistred: false,
-  registrationBegin: false
+  success: false,
+  submitLoading: false,
+  errorMessage: ''
 };
 
 export const usersReducer = createReducer(
   initialState,
-  on(registerUserSuccessMessage, (state, action) => {
-    console.log('Register is Success')
+  on(usersSuccessMessage, (state, action) => {
     return {
       ...state,
-      isRegistred: true
+      success: action.show
     }
   }),
-  on(toggleRegistration, (state, action) => {
+  on(toggleSubmitLoading, (state, action) => {
     return {
       ...state,
-      registrationBegin: action.registrationBegin
+      submitLoading: action.submitLoading
+    }
+  }),
+  on(setUsersErrorMessage, (state, action) => {
+    return {
+      ...state,
+      errorMessage: action.errorMessage
     }
   })
 );

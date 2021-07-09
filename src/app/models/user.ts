@@ -10,7 +10,6 @@ export class User {
         public gender: string,
         public password?: string,
         public roles?: string[],
-        public created_at?: string,
         public id?: number,
         public createdOn?: string
     ){}

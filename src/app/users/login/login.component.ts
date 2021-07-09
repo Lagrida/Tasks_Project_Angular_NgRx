@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { EMPTY, Observable } from 'rxjs';
 import { LoginType } from 'src/app/models/auth';
 import { AppState } from 'src/app/reducers';
-import { loginUser, toggleRegistration } from '../store/users-action.actions';
-import { getRegistrationBegin } from '../store/users.selectors';
+import { loginUser, setUsersErrorMessage, toggleSubmitLoading } from '../store/users-action.actions';
+import { getSubmitLoading, getUsersErrorMessage } from '../store/users.selectors';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +15,18 @@ import { getRegistrationBegin } from '../store/users.selectors';
 export class LoginComponent implements OnInit {
 
   form: any;
-  registrationBegin: Observable<boolean> = EMPTY;
+  submitLoading: Observable<boolean> = EMPTY;
+  errorMessage: Observable<string> = EMPTY;
 
-  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.registrationBegin = this.store.select(getRegistrationBegin);
+
+    this.store.dispatch(setUsersErrorMessage({errorMessage : ""}));
+
+    this.errorMessage = this.store.select(getUsersErrorMessage);
+    this.submitLoading = this.store.select(getSubmitLoading);
+
     this.form = this.formBuilder.group({
       username: [''],
       password: ['']
@@ -28,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   handleSubmit(event:any){
-    this.store.dispatch(toggleRegistration({registrationBegin:true}));
+    this.store.dispatch(toggleSubmitLoading({submitLoading:true}));
     const user : LoginType = {
       username: this.form.value.username,
       password:this.form.value.password

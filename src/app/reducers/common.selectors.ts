@@ -6,7 +6,8 @@ import { CommonState } from "./common.reducer";
 const getCommonState = createFeatureSelector<CommonState>('commonState');
 
 
-export const getErrorMessage = createSelector(getCommonState, state => {
+export const getCommonErrorMessage = createSelector(getCommonState, state => {
     //console.log('error Message : ' + state.commonState.errorMessage)
   return state.errorMessage;
 });
+

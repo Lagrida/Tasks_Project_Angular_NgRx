@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { UserAuth } from 'src/app/models/auth';
 import { User } from 'src/app/models/user';
-import { loginUserSuccess } from './users-action.actions';
+import { loginUserSuccess, logout } from './users-action.actions';
 
 
 export const globalUsersFeatureKey = 'globalUsers';
@@ -23,6 +23,12 @@ export const GlobalUsersreducer = createReducer(
     return {
       ...state,
       user: action.user,
+    };
+  }),
+  on(logout, (state, action) => {
+    return {
+      ...state,
+      user: null
     };
   })
 );
