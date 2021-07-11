@@ -34,15 +34,15 @@
                         In progress
                     </div>
                     <div class="task-status-body" name="in_progress" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="getTasksInProgress | async" [cdkDropListConnectedTo]="[tasksList, completedList]" (cdkDropListDropped)="drop($event)">
-                        <mat-card class="task" *ngFor="let item of (getTasksInProgress | async)" cdkDrag>
+                        <mat-card style="padding: 0px" class="task" *ngFor="let item of (getTasksInProgress | async)" cdkDrag>
                             <div style="display: flex; justify-content: space-between;">
-                                <div>{{ item.task.title }}</div>
-                                <div>
+                                <div style="flex-grow:2; padding: 15px" (click)="displayTask(item)">{{ item.task.title }}</div>
+                                <div style="padding: 15px 5px" *ngIf="(isAdmin | async) && (getUserId | async) == item.task.userOwner">
                                     <div style="display: inline-block; margin-right: 10px; cursor: pointer" matTooltip="Edit" matTooltipPosition="above">
                                         <mat-icon class="align-middle" (click)="updateTask(item)">edit</mat-icon>
                                     </div>
                                     <div style="display: inline-block; cursor: pointer" matTooltip="Delete" matTooltipPosition="above">
-                                        <mat-icon class="align-middle">delete</mat-icon>
+                                        <mat-icon class="align-middle" (click)="deleteTask(item?.task?.id)">delete</mat-icon>
                                     </div>
                                 </div>
                             </div>
@@ -53,16 +53,16 @@
                     <div class="task-status-title">
                         Completed
                     </div>
-                    <div class="task-status-body" name="completed" cdkDropList #completedList="cdkDropList" [cdkDropListData]="getTasksCompleted | async" [cdkDropListConnectedTo]="[inProgressList]" (cdkDropListDropped)="drop($event)">
-                        <mat-card class="task" *ngFor="let item of (getTasksCompleted | async)" cdkDrag>
+                    <div class="task-status-body" name="completed" cdkDropList #completedList="cdkDropList" [cdkDropListData]="getTasksCompleted | async" [cdkDropListConnectedTo]="[]" (cdkDropListDropped)="drop($event)">
+                        <mat-card style="padding: 0px" class="task" *ngFor="let item of (getTasksCompleted | async)" cdkDrag>
                             <div style="display: flex; justify-content: space-between;">
-                                <div>{{ item.task.title }}</div>
-                                <div>
+                                <div style="flex-grow:2; padding: 15px" (click)="displayTask(item)">{{ item.task.title }}</div>
+                                <div style="padding: 15px 5px" *ngIf="(isAdmin | async) && (getUserId | async) == item.task.userOwner">
                                     <div style="display: inline-block; margin-right: 10px; cursor: pointer" matTooltip="Edit" matTooltipPosition="above">
-                                        <mat-icon class="align-middle">edit</mat-icon>
+                                        <mat-icon class="align-middle" (click)="updateTask(item)">edit</mat-icon>
                                     </div>
                                     <div style="display: inline-block; cursor: pointer" matTooltip="Delete" matTooltipPosition="above">
-                                        <mat-icon class="align-middle">delete</mat-icon>
+                                        <mat-icon class="align-middle" (click)="deleteTask(item?.task?.id)">delete</mat-icon>
                                     </div>
                                 </div>
                             </div>

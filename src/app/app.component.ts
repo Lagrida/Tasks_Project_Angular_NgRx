@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { EMPTY, Observable } from 'rxjs';
 import { AppState } from './reducers';
 import { setCommonErrorMessage } from './reducers/common.actions';
 import { getCommonErrorMessage } from './reducers/common.selectors';
-import { TasksService } from './services/tasks.service';
-import { UsersService } from './services/users.service';
 import { loginUserSuccess, tryLogin } from './users/store/users-action.actions';
 
 @Component({

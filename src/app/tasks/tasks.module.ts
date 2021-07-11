@@ -30,6 +30,7 @@ import { DisplayTaskComponent } from './display-task/display-task.component';
 import { FocusInvalidFieldsDirective } from "../directives/focus-invalid-fields.directive";
 import { UpdateTaskComponent } from './update-task/update-task.component';
 import { TaskFormComponent } from './task-form/task-form.component';
+import { DisplaySignatureComponent } from './display-signature/display-signature.component';
 
 
 
@@ -46,7 +47,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     OverlayComponent,
     DisplayTaskComponent,
     UpdateTaskComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    DisplaySignatureComponent
   ],
     imports: [
         CommonModule,

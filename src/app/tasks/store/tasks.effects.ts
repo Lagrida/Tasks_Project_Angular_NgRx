@@ -6,11 +6,10 @@ import { catchError, exhaustMap, map, mergeMap, take, tap, withLatestFrom } from
 import { AppState } from 'src/app/reducers';
 import { FileObs, FilesService } from 'src/app/services/files.service';
 import { TasksService } from 'src/app/services/tasks.service';
-import { addNewTask, uploadEnded, emptyAction, incrementFileErrorUpload, incrementFileSuccessUpload, loadTasks, loadTasksSuccess, setTasksErrorMessage, toggleSubmitLoading, toggleTasksAreFullFeed, toggleTasksLoading, toggleTasksSuccess, updateTasksFileStatus, updateTasksFileStatusProperty, uploadTaskFiles, updateTask, deleteTask } from './tasks.actions';
+import { addNewTask, uploadEnded, emptyAction, incrementFileErrorUpload, incrementFileSuccessUpload, loadTasks, loadTasksSuccess, setTasksErrorMessage, toggleSubmitLoading, toggleTasksAreFullFeed, toggleTasksLoading, toggleTasksSuccess, updateTasksFileStatus, updateTasksFileStatusProperty, uploadTaskFiles, updateTask, deleteTask, updateTaskType, addTaskSignature, TaskSignatureAdded } from './tasks.actions';
 import { merge as mergeStatic } from 'rxjs/internal/observable/merge';
-import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { FileStatus } from 'src/app/models/file-status';
-import { getSuccessErrorFilesUploadNumber, getTaskFileStatusByFileName, getTasksAreFullFeed, getTotalTaskFilesStatus } from './tasks.selectors';
+import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
+import { getSuccessErrorFilesUploadNumber, getTotalTaskFilesStatus } from './tasks.selectors';
 import { setCommonErrorMessage } from 'src/app/reducers/common.actions';
 
 @Injectable()
@@ -74,6 +73,24 @@ export class TasksEffects {
       })
     )
   });
+  updateTaskType$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateTaskType),
+      exhaustMap(action => {
+        return this.tasksService.updateTaskType(action.taskId, action.taskType).pipe(
+          map((data:any) => {
+            this.store.dispatch(setCommonErrorMessage({ message: '' }));
+            this.store.dispatch(toggleTasksLoading({ loading: true }));
+
+            return loadTasks();
+          }),
+          catchError((error:any) => {
+            return of(setCommonErrorMessage({ message: error?.message }));
+          })
+        )
+      })
+    )
+  });
   deleteTask$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(deleteTask),
@@ -98,7 +115,6 @@ export class TasksEffects {
       let observers: Observable<any>[] = [];
       action.files.forEach((file: File) => {
         observers.push(this.filesService.uploadTaskFile(file, action.taskId).pipe(catchError((error:any) => {
-          //this.store.dispatch(incrementFileErrorUpload());
           this.store.dispatch(updateTasksFileStatusProperty({fileName: file.name, property: "class", value: "error-upload"}));
           this.store.dispatch(updateTasksFileStatusProperty({fileName: file.name, property: "percent", value: 0}));
           return of(incrementFileErrorUpload());
@@ -155,5 +171,30 @@ export class TasksEffects {
         )
       })
     )
+  });
+  addTaskSignature$ = createEffect(() => { //uploadTaskFiles
+    return this.actions$.pipe(
+    ofType(addTaskSignature),
+    exhaustMap(action => {
+      return this.filesService.uploadTaskSignatureFile(action.file, action.taskId).pipe(
+        map((event: HttpEvent<any>) => {
+          if(event.type == HttpEventType.UploadProgress){
+            const percent = Math.round(100 * event.loaded / (event.total || 1));
+            return updateTasksFileStatusProperty({fileName: "filename.png", property: "percent", value: percent});
+          }
+          else if(event.type == HttpEventType.Response){
+            this.store.dispatch(setTasksErrorMessage({ errorMessage: '' }));
+            this.store.dispatch(TaskSignatureAdded());
+            return loadTasks();
+          }
+          return emptyAction();
+        }),
+        catchError((error:any) => {
+          this.store.dispatch(toggleSubmitLoading({submitLoading: false}));
+          return of(setTasksErrorMessage({ errorMessage: error?.message }));
+        })
+      )
+    })
+    );
   });
 }

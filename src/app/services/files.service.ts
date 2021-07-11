@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { combineLatest, fromEvent, Observable, of } from 'rxjs';
 import { distinctUntilChanged, map, take } from 'rxjs/operators';
 import { filesService } from '../backend';
+import { AppFile } from '../models/full-task';
 
 export interface FileObs {
     fileName: string,
@@ -35,6 +36,20 @@ export class FilesService {
           return combine;
         })
     );
+  }
+  getOneFile(fileName: string): Observable<AppFile>{
+    const url = filesService + 'get_file/' + fileName;
+    return this.http.get<AppFile>(url);
+  }
+  uploadTaskSignatureFile(file: File, taskId: number): Observable<any>{
+    const url = filesService + "add_signature_task/" + taskId;
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    return this.http.post<any>(url, formData, {
+        reportProgress: true,
+        responseType: 'json',
+        observe: 'events'
+    });
   }
   removeExtension(title: string){
     let titleArr = title.split('.');

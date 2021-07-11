@@ -77,6 +77,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.selectedUsersStartedWith = [...this.fullTask.users];
     this.store.dispatch(setTasksErrorMessage({errorMessage : ""}));
     this.store.dispatch(toggleTasksSuccess({success : false}));
+    this.store.dispatch(toggleSubmitLoading({ submitLoading: false }));
     this.store.dispatch(initUploadEnded());
     this.store.dispatch(initFilesStatus());
 
@@ -132,12 +133,10 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     const users = this.selectedUsersStartedWith.map(el => el.id);
     const task: Task = new Task(values.title, values.description, users);
     if(this.isAdding){
-      console.log('adding')
       // Adding
       this.store.dispatch(addNewTask({ task, files: this.getFilesList }));
     }else{
       //Updating
-      console.log('updating')
       if(this.fullTask.task.id != null){
         this.store.dispatch(updateTask({ task, taskId: this.fullTask.task.id,files: this.getFilesList }));
       }

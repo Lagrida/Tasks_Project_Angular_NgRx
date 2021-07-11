@@ -1,20 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
-import { deleteTask, loadTasks, toggleTasksLoading, updateTask, uploadEnded } from '../store/tasks.actions';
-import { EMPTY, Observable, Subscription } from 'rxjs';
+import { deleteTask, loadTasks, TaskSignatureAdded, toggleTasksLoading, updateTask, updateTaskType, uploadEnded } from '../store/tasks.actions';
+import { EMPTY, fromEvent, Observable, Subscription } from 'rxjs';
 import { getTasksInitial, getTasksAreFullFeed, getTasksLoading, getTasksInProgress, getTasksCompleted } from '../store/tasks.selectors';
 import { FullTask, AppFile, TaskUser } from 'src/app/models/full-task';
 import { DisplayTaskComponent } from '../display-task/display-task.component';
 import { Actions, ofType } from '@ngrx/effects';
-import { delay } from 'rxjs/operators';
+import { delay, map, take } from 'rxjs/operators';
 import { UpdateTaskComponent } from '../update-task/update-task.component';
 import { getUserId, isAdmin } from 'src/app/users/store/global-users.selectors';
 import { getCommonErrorMessage } from 'src/app/reducers/common.selectors';
 import { setCommonErrorMessage } from 'src/app/reducers/common.actions';
+import { Task } from 'src/app/models/task';
+import { DisplaySignatureComponent } from '../display-signature/display-signature.component';
 
 @Component({
   selector: 'app-body',
@@ -64,6 +66,14 @@ export class BodyComponent implements OnInit, OnDestroy {
         this.dialog.closeAll();
       })
     );
+    this.subscription.add(
+      this.actions$.pipe(
+        ofType(TaskSignatureAdded),
+        delay(700)
+      ).subscribe(val => {
+        this.dialog.closeAll();
+      })
+    );
   }
   openDialog(): void {
     this.dialog.open(AddTaskComponent, {
@@ -90,21 +100,36 @@ export class BodyComponent implements OnInit, OnDestroy {
   }
   drop(event: CdkDragDrop<any>) {
     console.log('Drop');
-    /*console.log(event.container.data); // L'object
-    console.log(event);
-    console.log(event.currentIndex);
-    console.log(event.previousIndex);*/
+    const taskTypes = ['initial', 'in_progress', 'completed'];
     //if(event != null){
       if (event.previousContainer === event.container) {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       }
       else{
-        console.log(event.container)
-        console.log(event.previousContainer)
-        transferArrayItem(event.previousContainer.data,
-                          event.container.data,
-                          event.previousIndex,
-                          event.currentIndex);
+        const taskType = event.container.element.nativeElement.getAttribute("name");
+        const taskDropped: FullTask = event.previousContainer.data[event.previousIndex];
+        if(taskType === taskTypes[2]){ // completed
+          // Open Signature
+          this.dialog.open(DisplaySignatureComponent, {
+            width: '700px',
+            data: {
+              taskId: taskDropped.task.id
+            }
+          });
+        }else{
+          // initial --> in_progress or in_progress --> initial
+          const getTypeNumber = taskTypes.findIndex(el => el === taskType);
+          // send To server
+          if(taskDropped.task.id != undefined){
+            this.store.dispatch(updateTaskType({ taskId: taskDropped.task.id, taskType: getTypeNumber }));
+          }
+        }
+        if(taskType !== taskTypes[2]){
+          transferArrayItem(event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex);
+        }
       }
     }
     deleteTask(taskId: number | undefined): void{

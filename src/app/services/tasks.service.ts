@@ -25,9 +25,12 @@ export class TasksService {
     const url = tasksService + 'delete_task/' + taskId;
     return this.http.delete<any>(url);
   }
-
   getTasks(): Observable<FullTask[]>{
     const url = tasksService + 'get_full_tasks';
     return this.http.get<FullTask[]>(url);
+  }
+  updateTaskType(taskId: number, type: number): Observable<Task>{
+    const url = tasksService + 'change_task_type/' + taskId + '/' + type;
+    return this.http.patch<Task>(url, {});
   }
 }

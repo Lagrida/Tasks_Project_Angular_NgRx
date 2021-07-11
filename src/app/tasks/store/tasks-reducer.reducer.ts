@@ -20,7 +20,6 @@ export interface TasksState {
   },
   uploadEnd: boolean
 }
-
 export const initialState: TasksState = {
   success: false,
   submitLoading: false,
@@ -35,8 +34,6 @@ export const initialState: TasksState = {
   },
   uploadEnd: false
 };
-
-
 export const tasksReducer = createReducer(
   initialState,
   on(initTasksStore, (state, action) => {

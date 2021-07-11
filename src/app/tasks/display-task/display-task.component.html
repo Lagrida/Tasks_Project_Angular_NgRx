@@ -55,6 +55,30 @@
                     <div class="text-center" *ngIf="data.fullTask.files.length == 0">There are no files!</div>
                 </div>
             </div>
+            <div class="col-12 my-1" *ngIf="data.fullTask.task.type == 2">
+                <div><b>Completed at :</b></div>
+                <div class="my-1 text-center" style="color: green; font-family: Verdana, Geneva, Tahoma, sans-serif">{{ data.fullTask.task.signature.createdOn | date:'dd/MM/yyyy HH:mm' }}</div>
+            </div>
+            <div class="col-12 my-1" *ngIf="data.fullTask.task.type == 2">
+                <div><b>The user who signed :</b></div>
+                <div class="my-1 text-center">
+                    <mat-spinner *ngIf="loadingUser" color="accent" diameter="30" style="vertical-align:middle; display: inline-block"></mat-spinner>
+                        <mat-chip-list *ngIf="!loadingUser">
+                            <mat-chip
+                            [selectable]="true"
+                            [removable]="false">
+                                <img [src]="getUserSigned.image" class="avatar" /> &nbsp; {{getUserSigned.username}}
+                            </mat-chip>
+                        </mat-chip-list>
+                </div>
+            </div>
+            <div class="col-12 my-1" *ngIf="data.fullTask.task.type == 2">
+                <div><b>The signature :</b></div>
+                <mat-spinner *ngIf="loadingSignatureFile" color="accent" diameter="30" style="vertical-align:middle; display: inline-block"></mat-spinner>
+                <div class="my-1 text-center" *ngIf="!loadingSignatureFile" style="border: 2px solid black; width: 95%">
+                    <img style="width: 95%" [src]="filesService.getSource2(getSignatureFile.fileDirectory, getSignatureFile.fileName, getSignatureFile.fileExtension)" />
+                </div>
+            </div>
         </div>
     </div>
 </mat-dialog-content>

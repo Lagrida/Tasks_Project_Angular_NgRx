@@ -32,7 +32,10 @@ export const TOGLE_TASKS_LOADING = '[Tasks] Toggle tasks loading';
 export const TOGGLE_TASKS_ARE_FULL_FEED = '[Tasks] Toggle Tasks are full feed';
 
 export const UPDATE_TASK = '[Tasks] Update Task';
+export const UPDATE_TASK_TYPE = '[Tasks] Update Task Type';
 export const DELETE_TASK = '[Tasks] Delete Task';
+export const ADD_TASK_SIGNATURE = '[Tasks] Add task signature';
+export const TASK_SIGNATURE_ADDED = '[Tasks] task signature added successfuly';
 
 export const INIT_TASKS_STORE = '[Tasks] Init tasks store';
 
@@ -52,6 +55,9 @@ export const uploadTaskFiles = createAction(UPLOAD_TASK_FILES, props<{ files: Fi
 
 export const updateTask = createAction(UPDATE_TASK, props<{ task: Task, taskId: number, files: File[] }>());
 export const deleteTask = createAction(DELETE_TASK, props<{ taskId: number }>());
+export const updateTaskType = createAction(UPDATE_TASK_TYPE, props<{ taskId: number, taskType: number }>());
+export const addTaskSignature = createAction(ADD_TASK_SIGNATURE, props<{ file: File, taskId: number }>());
+export const TaskSignatureAdded = createAction(TASK_SIGNATURE_ADDED);
 
 export const initUploadObject = createAction(INIT_UPLOAD_OBJECT);
 export const incrementFileSuccessUpload = createAction(INCREMENT_FILE_SUCCESS_UPLOAD);
