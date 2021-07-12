@@ -12,14 +12,11 @@
     <div>
         <canvas #canvas height="350" width="620" style="border: 2px solid #333333"></canvas>
     </div>
-    <div class="my-1 text-center mx-auto" style="width: 624px">
-        <div class="progress progress-lg">
-            <div *ngIf="filesStatus | async as files">
-                <div class="progress-bar" *ngIf="files != null && files[0] != undefined" [ngStyle]="{ width: files[0].percent+ '%' }">
+    <div class="my-1 text-center mx-auto" style="width: 624px" *ngIf="filesStatus | async as files">
+        <div class="progress progress-lg" *ngIf="files != null && files[0] != undefined">
+                <div class="progress-bar" [ngStyle]="{ width: files[0].percent + '%' }">
                 {{ files[0].percent }} %
                 </div>
-            </div>
-
         </div>
     </div>
     <div class="my-2">

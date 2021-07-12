@@ -40,11 +40,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         ]
       }],
       passwordZone: this.formBuilder.group({
-        password: [''],
+        password: ['', {
+			validators: [
+				Validators.minLength(1)
+			]
+		}],
         repeatedPassword: ['']
       }, {
-        validators: [this.checkPasswords],
-        updateOn: 'change'
+        validators: [this.checkPasswords]
       } as AbstractControlOptions),
       email: ['', {
         validators: [

@@ -69,8 +69,9 @@ export class BodyComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.actions$.pipe(
         ofType(TaskSignatureAdded),
-        delay(700)
+        delay(800)
       ).subscribe(val => {
+		
         this.dialog.closeAll();
       })
     );

@@ -56,6 +56,7 @@ export class EditProfileComponent implements OnInit {
   handleSubmit(form:any){
     const values = form.value;
     const birthday = values.birthday.toLocaleDateString() + ' 01:00';
+    console.log(birthday);
     const user: User = new User(values.username, values.email, values.image, values.name, birthday, values.gender);
     this.store.dispatch(toggleSubmitLoading({ submitLoading:true }));
     this.store.dispatch(updateUser({user, id: this.user.id ?? 0}));

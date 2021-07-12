@@ -124,6 +124,7 @@ export class TasksEffects {
         (fileObs: FileObs) => {
           console.log('in subscription');
           if(fileObs.event.type == HttpEventType.UploadProgress){
+			  console.log
             const percent = Math.round(100 * fileObs.event.loaded / (fileObs.event.total || 1));
             this.store.dispatch(updateTasksFileStatusProperty({fileName: fileObs.fileName, property: "percent", value: percent}));
           }

@@ -27,10 +27,23 @@ import { RouterState } from './reducers/router/router-state';
 import { CommonEffects } from './reducers/common.effects';
 import { JwtHttpInterceptorService } from './services/jwt-http-interceptor.service';
 import { FocusInvalidFieldsDirective } from './directives/focus-invalid-fields.directive';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'LL'
+    },
+    display: {
+        dateInput: 'DD/MM/YYYY',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'YYYY'
+    }
+};
+
 
 @NgModule({
   declarations: [
@@ -69,7 +82,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtHttpInterceptorService,
       multi: true
-    }
+    },
+	{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+	{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+
   ],
   bootstrap: [AppComponent]
 })
