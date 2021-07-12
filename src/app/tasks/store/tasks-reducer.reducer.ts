@@ -130,6 +130,7 @@ export const tasksReducer = createReducer(
     }
   }),
   on(incrementFileErrorUpload, (state, action) => {
+    console.log('i am here in reducer')
     let filesUploadProgress = {...state.filesUploadProgress};
     filesUploadProgress.error += 1;
     return {

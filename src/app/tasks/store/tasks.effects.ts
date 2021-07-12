@@ -6,7 +6,7 @@ import { catchError, exhaustMap, map, mergeMap, take, tap, withLatestFrom } from
 import { AppState } from 'src/app/reducers';
 import { FileObs, FilesService } from 'src/app/services/files.service';
 import { TasksService } from 'src/app/services/tasks.service';
-import { addNewTask, uploadEnded, emptyAction, incrementFileErrorUpload, incrementFileSuccessUpload, loadTasks, loadTasksSuccess, setTasksErrorMessage, toggleSubmitLoading, toggleTasksAreFullFeed, toggleTasksLoading, toggleTasksSuccess, updateTasksFileStatus, updateTasksFileStatusProperty, uploadTaskFiles, updateTask, deleteTask, updateTaskType, addTaskSignature, TaskSignatureAdded } from './tasks.actions';
+import { addNewTask, uploadEnded, emptyAction, incrementFileErrorUpload, incrementFileSuccessUpload, loadTasks, loadTasksSuccess, setTasksErrorMessage, toggleSubmitLoading, toggleTasksAreFullFeed, toggleTasksLoading, toggleTasksSuccess, updateTasksFileStatus, updateTasksFileStatusProperty, uploadTaskFiles, updateTask, deleteTask, updateTaskType, addTaskSignature, TaskSignatureAdded, deleteTasksFileStatus } from './tasks.actions';
 import { merge as mergeStatic } from 'rxjs/internal/observable/merge';
 import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { getSuccessErrorFilesUploadNumber, getTotalTaskFilesStatus } from './tasks.selectors';
@@ -117,20 +117,24 @@ export class TasksEffects {
         observers.push(this.filesService.uploadTaskFile(file, action.taskId).pipe(catchError((error:any) => {
           this.store.dispatch(updateTasksFileStatusProperty({fileName: file.name, property: "class", value: "error-upload"}));
           this.store.dispatch(updateTasksFileStatusProperty({fileName: file.name, property: "percent", value: 0}));
-          return of(incrementFileErrorUpload());
+          //this.store.dispatch(deleteTasksFileStatus({fileName: file.name}));
+          this.store.dispatch(incrementFileErrorUpload());
+          console.log('I am here in effects')
+          return of();
         })));
       });
       this.uploadFiles$ = mergeStatic(...observers).subscribe(
         (fileObs: FileObs) => {
           console.log('in subscription');
-          if(fileObs.event.type == HttpEventType.UploadProgress){
-			  console.log
-            const percent = Math.round(100 * fileObs.event.loaded / (fileObs.event.total || 1));
-            this.store.dispatch(updateTasksFileStatusProperty({fileName: fileObs.fileName, property: "percent", value: percent}));
-          }
-          else if(fileObs.event.type == HttpEventType.Response){
-            this.store.dispatch(incrementFileSuccessUpload());
-            this.store.dispatch(updateTasksFileStatusProperty({fileName: fileObs.fileName, property: "class", value: "done"}));
+          if(fileObs.event){
+            if(fileObs.event.type == HttpEventType.UploadProgress){
+              const percent = Math.round(100 * fileObs.event.loaded / (fileObs.event.total || 1));
+              this.store.dispatch(updateTasksFileStatusProperty({fileName: fileObs.fileName, property: "percent", value: percent}));
+            }
+            else if(fileObs.event.type == HttpEventType.Response){
+              this.store.dispatch(incrementFileSuccessUpload());
+              this.store.dispatch(updateTasksFileStatusProperty({fileName: fileObs.fileName, property: "class", value: "done"}));
+            }
           }
         }
       )
@@ -145,6 +149,7 @@ export class TasksEffects {
         const totalFilesCheked:number = filesSuccessErrorUploaded;
         const totalTaskFiles: number = totalTaskFilesStatus;
         if(totalFilesCheked === totalTaskFiles){
+          console.log('upload End');
           this.uploadFiles$.unsubscribe();
           this.store.dispatch(uploadEnded());
           return loadTasks();
