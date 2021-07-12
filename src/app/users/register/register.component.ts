@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       passwordZone: this.formBuilder.group({
         password: ['', {
 			validators: [
-				Validators.minLength(1)
+				Validators.minLength(6)
 			]
 		}],
         repeatedPassword: ['']
