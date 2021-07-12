@@ -39,7 +39,7 @@ export class DisplaySignatureComponent implements OnInit, OnDestroy {
     this.mouseup$.unsubscribe();
     this.mouseleave$.unsubscribe();
 
-    //this.store.dispatch(initFilesStatus());
+    this.store.dispatch(initFilesStatus());
   }
   getImageFile(): File | null {
     const arr = this.canvas.nativeElement.toDataURL().split(',');
